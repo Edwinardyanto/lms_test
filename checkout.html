@@ -1,337 +1,386 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - TeleSignal AI</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #00ff88;
-            --primary-dark: #00cc6a;
-            --bg-dark: #0a0e1a;
-            --bg-card: #111827;
-            --text: #e5e7eb;
-            --text-dim: #9ca3af;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout - TeleSignal AI</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
 
-        body {
-            font-family: 'Barlow', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text);
-            min-height: 100vh;
-            padding: 40px 20px;
-        }
+  <style>
+    :root {
+      --primary: #00ff88;
+      --primary-dark: #00cc6a;
+      --bg-dark: #0a0e1a;
+      --bg-card: #111827;
+      --text: #e5e7eb;
+      --text-dim: #9ca3af;
+    }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        .logo {
-            font-size: 32px;
-            font-weight: 900;
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 40px;
-        }
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
 
-        .checkout-card {
-            background: var(--bg-card);
-            border-radius: 24px;
-            padding: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
-        h1 {
-            font-size: 28px;
-            margin-bottom: 24px;
-            text-align: center;
-        }
+    .logo {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 40px;
+      letter-spacing: 0.2px;
+    }
 
-        .plan-info {
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid var(--primary);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 32px;
-        }
+    .checkout-card {
+      background: var(--bg-card);
+      border-radius: 24px;
+      padding: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
 
-        .plan-name {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
 
-        .plan-price {
-            font-size: 36px;
-            font-weight: 900;
-            margin-bottom: 16px;
-        }
+    .plan-info {
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid var(--primary);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
 
-        .plan-features {
-            list-style: none;
-        }
+    .plan-name {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
 
-        .plan-features li {
-            padding: 8px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            color: var(--text-dim);
-        }
+    .plan-price {
+      font-size: 36px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      line-height: 1.1;
+    }
 
-        .plan-features li::before {
-            content: '✓';
-            color: var(--primary);
-            font-weight: 900;
-        }
+    .plan-meta {
+      color: var(--text-dim);
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+    .plan-features {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 14px;
-        }
+    .plan-features li {
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-dim);
+    }
 
-        input, select {
-            width: 100%;
-            padding: 14px 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: var(--text);
-            font-size: 16px;
-            font-family: 'Barlow', sans-serif;
-        }
+    .plan-features li::before {
+      content: '✓';
+      color: var(--primary);
+      font-weight: 900;
+    }
 
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 24px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 14px;
+    }
 
-        .btn-submit {
-            width: 100%;
-            padding: 18px;
-            background: var(--primary);
-            color: var(--bg-dark);
-            border: none;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 24px;
-        }
+    .back-link:hover {
+      color: var(--primary);
+    }
 
-        .btn-submit:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
+    /* ========== OrderOnline skin to match TeleSignal AI ========== */
+    .oo-skin {
+      margin-top: 8px;
+    }
 
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 24px;
-            color: var(--text-dim);
-            text-decoration: none;
-        }
+    .oo-skin .ooef,
+    .oo-skin .orderonline-embed-form {
+      width: 100%;
+    }
 
-        .back-link:hover {
-            color: var(--primary);
-        }
+    .oo-skin,
+    .oo-skin input,
+    .oo-skin select,
+    .oo-skin textarea,
+    .oo-skin button {
+      font-family: 'Barlow', sans-serif !important;
+    }
 
-        .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
-        }
+    .oo-skin label {
+      display: block !important;
+      margin-bottom: 8px !important;
+      font-weight: 600 !important;
+      font-size: 14px !important;
+      color: var(--text) !important;
+    }
 
-        .payment-method {
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    .oo-skin input,
+    .oo-skin select,
+    .oo-skin textarea {
+      width: 100% !important;
+      padding: 14px 16px !important;
+      background: rgba(255, 255, 255, 0.05) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 12px !important;
+      color: var(--text) !important;
+      font-size: 16px !important;
+      line-height: 1.2 !important;
+    }
 
-        .payment-method:hover {
-            border-color: var(--primary);
-        }
+    .oo-skin input::placeholder,
+    .oo-skin textarea::placeholder {
+      color: rgba(229, 231, 235, 0.55) !important;
+    }
 
-        .payment-method.active {
-            background: rgba(0, 255, 136, 0.1);
-            border-color: var(--primary);
-        }
+    .oo-skin input:focus,
+    .oo-skin select:focus,
+    .oo-skin textarea:focus {
+      outline: none !important;
+      border-color: var(--primary) !important;
+    }
 
-        .payment-method input[type="radio"] {
-            display: none;
-        }
+    .oo-skin button,
+    .oo-skin input[type="submit"],
+    .oo-skin .btn,
+    .oo-skin .button {
+      width: 100% !important;
+      padding: 18px !important;
+      background: var(--primary) !important;
+      color: var(--bg-dark) !important;
+      border: none !important;
+      border-radius: 12px !important;
+      font-size: 18px !important;
+      font-weight: 700 !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+      margin-top: 12px !important;
+    }
 
-        .payment-method label {
-            cursor: pointer;
-            margin: 0;
-            font-weight: 700;
-        }
-    </style>
+    .oo-skin button:hover,
+    .oo-skin input[type="submit"]:hover {
+      background: var(--primary-dark) !important;
+      transform: translateY(-2px) !important;
+    }
+
+    .oo-skin .error,
+    .oo-skin .invalid,
+    .oo-skin .field-error {
+      color: #ff5f5f !important;
+    }
+
+    /* loader kecil agar rapi */
+    .ooef-loader {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 120px;
+      color: var(--text-dim);
+      font-size: 14px;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="logo">TeleSignal AI</div>
-        
-        <div class="checkout-card">
-            <h1>Checkout</h1>
-            
-            <div class="plan-info" id="planInfo">
-                <!-- Plan info will be populated by JavaScript -->
+  <div class="container">
+    <div class="logo">TeleSignal AI</div>
+
+    <div class="checkout-card">
+      <h1>Checkout</h1>
+
+      <div class="plan-info" id="planInfo"></div>
+
+      <div class="oo-skin">
+        <!-- OrderOnline Embed Code - v8.0.2 -->
+        <div class="ooef">
+          <form
+            class="orderonline-embed-form"
+            data-username="winbiz"
+            data-product-slug="test"
+            data-product-id="698d6177316634d9760ccbe1"
+            id="oo-embed-form-test-6286"
+            data-origin="orderonline"
+          >
+            <div class="ooef-loader">
+              <div aria-live="polite" role="status">Loading checkout...</div>
             </div>
-
-            <form id="checkoutForm">
-                <div class="form-group">
-                    <label>Nama Lengkap</label>
-                    <input type="text" name="name" required placeholder="Masukkan nama lengkap">
-                </div>
-
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" required placeholder="email@example.com">
-                </div>
-
-                <div class="form-group">
-                    <label>No. WhatsApp / Telegram</label>
-                    <input type="tel" name="phone" required placeholder="+62 812-3456-7890">
-                </div>
-
-                <div class="form-group">
-                    <label>Metode Pembayaran</label>
-                    <div class="payment-methods">
-                        <div class="payment-method" onclick="selectPayment('gopay')">
-                            <input type="radio" name="payment" value="gopay" id="gopay">
-                            <label for="gopay">GoPay</label>
-                        </div>
-                        <div class="payment-method" onclick="selectPayment('ovo')">
-                            <input type="radio" name="payment" value="ovo" id="ovo">
-                            <label for="ovo">OVO</label>
-                        </div>
-                        <div class="payment-method" onclick="selectPayment('dana')">
-                            <input type="radio" name="payment" value="dana" id="dana">
-                            <label for="dana">DANA</label>
-                        </div>
-                        <div class="payment-method" onclick="selectPayment('bank')">
-                            <input type="radio" name="payment" value="bank" id="bank">
-                            <label for="bank">Transfer Bank</label>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-submit">Lanjutkan Pembayaran</button>
-            </form>
-
-            <a href="index.html" class="back-link">← Kembali ke halaman utama</a>
+          </form>
         </div>
-    </div>
 
-    <script>
-        // Plan details
-        const plans = {
-            starter: {
-                name: 'Starter',
-                price: 'Rp 99.000',
-                period: '1 Bulan',
-                features: [
-                    'User profiling lengkap',
-                    'Signal harian personal',
-                    'Multi market support',
-                    'Risk management personal'
-                ]
-            },
-            pro: {
-                name: 'Pro Trader',
-                price: 'Rp 499.000',
-                period: '6 Bulan',
-                features: [
-                    'Semua fitur Starter',
-                    'Signal priority',
-                    'Performance tracking',
-                    'Hemat 17%'
-                ]
-            },
-            elite: {
-                name: 'Elite Annual',
-                price: 'Rp 999.000',
-                period: '12 Bulan',
-                features: [
-                    'Semua fitur Pro',
-                    'VIP signal access',
-                    'Dedicated AI model',
-                    'Hemat 16%'
-                ]
-            }
-        };
-
-        // Get plan from URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const selectedPlan = urlParams.get('plan') || 'starter';
-        const plan = plans[selectedPlan];
-
-        // Populate plan info
-        document.getElementById('planInfo').innerHTML = `
-            <div class="plan-name">${plan.name}</div>
-            <div class="plan-price">${plan.price}</div>
-            <div style="color: var(--text-dim); margin-bottom: 16px;">${plan.period}</div>
-            <ul class="plan-features">
-                ${plan.features.map(f => `<li>${f}</li>`).join('')}
-            </ul>
-        `;
-
-        // Payment method selection
-        function selectPayment(method) {
-            document.querySelectorAll('.payment-method').forEach(el => {
-                el.classList.remove('active');
-            });
-            event.currentTarget.classList.add('active');
-            document.getElementById(method).checked = true;
-        }
-
-        // Form submission
-        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(e.target);
-            const data = {
-                plan: selectedPlan,
-                name: formData.get('name'),
-                email: formData.get('email'),
-                phone: formData.get('phone'),
-                payment: formData.get('payment')
+        <script>
+          if (typeof xLogError != 'function') {
+            var xLogError = function (error) {
+              try {
+                var req = new XMLHttpRequest();
+                var payload = JSON.stringify({ url: document.location.href, line: error.line, stack: error.stack });
+                var params = 'message=' + encodeURIComponent(error.name) + '&payload=' + encodeURIComponent(payload) + '&type=embed&level=error';
+                req.open('POST', 'https://api.orderonline.id/log', true);
+                req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                req.send(params);
+              } catch (e) {}
             };
+          }
 
-            // TODO: Integrate dengan payment gateway (Midtrans, Xendit, dll)
-            console.log('Checkout data:', data);
-            
-            // Sementara alert dulu
-            alert(`Terima kasih ${data.name}!\n\nAnda akan diarahkan ke halaman pembayaran ${data.payment.toUpperCase()} untuk paket ${plan.name}.\n\nTotal: ${plan.price}`);
-            
-            // TODO: Redirect ke payment gateway
-            // window.location.href = 'payment-gateway-url';
-        });
-    </script>
+          try {
+            if (typeof xEmbedScript != 'function') {
+              var xEmbedScript = function () {
+                (function (w, d, e, v, id, t, s) {
+                  if (d.getElementById(id)) return;
+                  t = d.createElement(e);
+                  t.async = true;
+                  t.src = v;
+                  t.id = id;
+                  s = d.getElementsByTagName(e)[0];
+                  s.parentNode.insertBefore(t, s);
+                })(window, document, 'script', 'https://cdn.orderonline.id/js/embed-v2-slim.min.js?v=8.0.2', 'oo-embed-js');
+              };
+            }
+
+            if (typeof xEmbedInit != 'function') {
+              var xEmbedInit = function (w, n) {
+                if (w.ooe) return;
+                n = (w.ooe = function () {
+                  n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+                });
+                if (!w._ooe) w._ooe = n;
+                n.push = n;
+                n.loaded = true;
+                n.version = '8.0.2';
+                n.queue = [];
+              };
+            }
+
+            xEmbedInit(window);
+
+            // Redirect base (sesuai embed kamu)
+            ooe('setup', 'redirect', 'https://winbiz.orderonline.id');
+
+            // Init embed
+            ooe(
+              'init',
+              '63bedb5f983fd6d05d01448a',
+              '698d6177316634d9760ccbe1',
+              null,
+              'oo-embed-form-test-6286',
+              {
+                mode: 'page',
+                action: 'Klik untuk pemesanan',
+                title: 'Form Pemesanan',
+                triggerPixel: true,
+                triggerGtm: true
+              }
+            );
+
+            // Ensure jQuery exists (embed kamu butuh vendor jquery)
+            if (!window.jQuery) {
+              (function (w, d, e, v, id, t, s) {
+                if (d.getElementById(id)) return;
+                t = d.createElement(e);
+                t.async = true;
+                t.src = v;
+                t.id = id;
+                t.addEventListener('load', xEmbedScript);
+                s = d.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t, s);
+              })(window, document, 'script', 'https://cdn.orderonline.id/js/vendor/jquery.min.js', 'oo-embed-jquery');
+            } else {
+              xEmbedScript();
+            }
+          } catch (e) {
+            xLogError(e);
+            throw e;
+          }
+        </script>
+        <!-- End OrderOnline Embed Code - v8.0.2 -->
+      </div>
+
+      <a href="index.html" class="back-link">← Kembali ke halaman utama</a>
+    </div>
+  </div>
+
+  <script>
+    // Plan details (buat display saja, bukan untuk OrderOnline)
+    const plans = {
+      starter: {
+        name: 'Starter',
+        price: 'Rp 99.000',
+        period: '1 Bulan',
+        features: [
+          'User profiling lengkap',
+          'Signal harian personal',
+          'Multi market support',
+          'Risk management personal'
+        ]
+      },
+      pro: {
+        name: 'Pro Trader',
+        price: 'Rp 499.000',
+        period: '6 Bulan',
+        features: [
+          'Semua fitur Starter',
+          'Signal priority',
+          'Performance tracking',
+          'Hemat 17%'
+        ]
+      },
+      elite: {
+        name: 'Elite Annual',
+        price: 'Rp 999.000',
+        period: '12 Bulan',
+        features: [
+          'Semua fitur Pro',
+          'VIP signal access',
+          'Dedicated AI model',
+          'Hemat 16%'
+        ]
+      }
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedPlan = urlParams.get('plan') || 'starter';
+    const plan = plans[selectedPlan] || plans.starter;
+
+    document.getElementById('planInfo').innerHTML = `
+      <div class="plan-name">${plan.name}</div>
+      <div class="plan-price">${plan.price}</div>
+      <div class="plan-meta">${plan.period}</div>
+      <ul class="plan-features">
+        ${plan.features.map(f => `<li>${f}</li>`).join('')}
+      </ul>
+    `;
+  </script>
 </body>
 </html>
