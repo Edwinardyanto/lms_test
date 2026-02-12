@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - TeleSignal AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00ff88;
+            --primary-dark: #00cc6a;
+            --bg-dark: #0a0e1a;
+            --bg-card: #111827;
+            --text: #e5e7eb;
+            --text-dim: #9ca3af;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Barlow', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .checkout-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .plan-info {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .plan-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .plan-price {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+
+        .plan-features {
+            list-style: none;
+        }
+
+        .plan-features li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-dim);
+        }
+
+        .plan-features li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 900;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 16px;
+            font-family: 'Barlow', sans-serif;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            background: var(--primary);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 24px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 24px;
+            color: var(--text-dim);
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .payment-method {
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary);
+        }
+
+        .payment-method.active {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--primary);
+        }
+
+        .payment-method input[type="radio"] {
+            display: none;
+        }
+
+        .payment-method label {
+            cursor: pointer;
+            margin: 0;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">TeleSignal AI</div>
+        
+        <div class="checkout-card">
+            <h1>Checkout</h1>
+            
+            <div class="plan-info" id="planInfo">
+                <!-- Plan info will be populated by JavaScript -->
+            </div>
+
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" name="name" required placeholder="Masukkan nama lengkap">
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required placeholder="email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label>No. WhatsApp / Telegram</label>
+                    <input type="tel" name="phone" required placeholder="+62 812-3456-7890">
+                </div>
+
+                <div class="form-group">
+                    <label>Metode Pembayaran</label>
+                    <div class="payment-methods">
+                        <div class="payment-method" onclick="selectPayment('gopay')">
+                            <input type="radio" name="payment" value="gopay" id="gopay">
+                            <label for="gopay">GoPay</label>
+                        </div>
+                        <div class="payment-method" onclick="selectPayment('ovo')">
+                            <input type="radio" name="payment" value="ovo" id="ovo">
+                            <label for="ovo">OVO</label>
+                        </div>
+                        <div class="payment-method" onclick="selectPayment('dana')">
+                            <input type="radio" name="payment" value="dana" id="dana">
+                            <label for="dana">DANA</label>
+                        </div>
+                        <div class="payment-method" onclick="selectPayment('bank')">
+                            <input type="radio" name="payment" value="bank" id="bank">
+                            <label for="bank">Transfer Bank</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Lanjutkan Pembayaran</button>
+            </form>
+
+            <a href="index.html" class="back-link">← Kembali ke halaman utama</a>
+        </div>
+    </div>
+
+    <script>
+        // Plan details
+        const plans = {
+            starter: {
+                name: 'Starter',
+                price: 'Rp 99.000',
+                period: '1 Bulan',
+                features: [
+                    'User profiling lengkap',
+                    'Signal harian personal',
+                    'Multi market support',
+                    'Risk management personal'
+                ]
+            },
+            pro: {
+                name: 'Pro Trader',
+                price: 'Rp 499.000',
+                period: '6 Bulan',
+                features: [
+                    'Semua fitur Starter',
+                    'Signal priority',
+                    'Performance tracking',
+                    'Hemat 17%'
+                ]
+            },
+            elite: {
+                name: 'Elite Annual',
+                price: 'Rp 999.000',
+                period: '12 Bulan',
+                features: [
+                    'Semua fitur Pro',
+                    'VIP signal access',
+                    'Dedicated AI model',
+                    'Hemat 16%'
+                ]
+            }
+        };
+
+        // Get plan from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedPlan = urlParams.get('plan') || 'starter';
+        const plan = plans[selectedPlan];
+
+        // Populate plan info
+        document.getElementById('planInfo').innerHTML = `
+            <div class="plan-name">${plan.name}</div>
+            <div class="plan-price">${plan.price}</div>
+            <div style="color: var(--text-dim); margin-bottom: 16px;">${plan.period}</div>
+            <ul class="plan-features">
+                ${plan.features.map(f => `<li>${f}</li>`).join('')}
+            </ul>
+        `;
+
+        // Payment method selection
+        function selectPayment(method) {
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            document.getElementById(method).checked = true;
+        }
+
+        // Form submission
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = {
+                plan: selectedPlan,
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                payment: formData.get('payment')
+            };
+
+            // TODO: Integrate dengan payment gateway (Midtrans, Xendit, dll)
+            console.log('Checkout data:', data);
+            
+            // Sementara alert dulu
+            alert(`Terima kasih ${data.name}!\n\nAnda akan diarahkan ke halaman pembayaran ${data.payment.toUpperCase()} untuk paket ${plan.name}.\n\nTotal: ${plan.price}`);
+            
+            // TODO: Redirect ke payment gateway
+            // window.location.href = 'payment-gateway-url';
+        });
+    </script>
+</body>
+</html>
