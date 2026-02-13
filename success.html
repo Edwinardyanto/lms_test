@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Payment Success</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
+    .card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; max-width: 880px; }
+    h1 { margin: 0 0 8px; font-size: 20px; }
+    .muted { color: #6b7280; font-size: 13px; }
+    code, pre { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px; overflow: auto; }
+    .row { display: grid; grid-template-columns: 160px 1fr; gap: 10px; margin: 8px 0; }
+    .k { color: #111827; font-weight: 600; }
+    .v { color: #111827; word-break: break-all; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border-bottom: 1px solid #e5e7eb; padding: 8px; text-align: left; font-size: 13px; }
+    th { color: #374151; }
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; border: 1px solid #e5e7eb; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Success Redirect Captured</h1>
+    <div class="muted">Halaman ini cuma buat ngecek: redirect URL bawa parameter apa saja.</div>
+
+    <div class="row">
+      <div class="k">Full URL</div>
+      <div class="v" id="fullUrl"></div>
+    </div>
+
+    <div class="row">
+      <div class="k">Path</div>
+      <div class="v" id="path"></div>
+    </div>
+
+    <div class="row">
+      <div class="k">Common IDs</div>
+      <div class="v" id="commonIds"></div>
+    </div>
+
+    <div style="margin-top: 14px;">
+      <div class="k">Query Params</div>
+      <table>
+        <thead>
+          <tr><th>Key</th><th>Value</th></tr>
+        </thead>
+        <tbody id="paramsTable"></tbody>
+      </table>
+      <div class="muted" id="noParams" style="display:none; margin-top:8px;">
+        Tidak ada query parameter di URL redirect.
+      </div>
+    </div>
+
+    <div style="margin-top: 14px;">
+      <div class="k">Raw (JSON)</div>
+      <pre id="rawJson"></pre>
+    </div>
+  </div>
+
+  <script>
+    const full = window.location.href;
+    const url = new URL(full);
+
+    document.getElementById("fullUrl").textContent = full;
+    document.getElementById("path").textContent = url.pathname;
+
+    const params = {};
+    url.searchParams.forEach((v, k) => (params[k] = v));
+
+    const tbody = document.getElementById("paramsTable");
+    const keys = Object.keys(params);
+
+    if (keys.length === 0) {
+      document.getElementById("noParams").style.display = "block";
+    } else {
+      keys.forEach((k) => {
+        const tr = document.createElement("tr");
+        const tdK = document.createElement("td");
+        const tdV = document.createElement("td");
+        tdK.textContent = k;
+        tdV.textContent = params[k];
+        tr.appendChild(tdK);
+        tr.appendChild(tdV);
+        tbody.appendChild(tr);
+      });
+    }
+
+    // coba cari identifier umum
+    const candidates = [
+      "submission_id", "submissionId",
+      "order_id", "orderId",
+      "invoice_id", "invoiceId",
+      "transaction_id", "transactionId",
+      "id", "ref", "reference", "token"
+    ];
+
+    const found = candidates
+      .filter(k => url.searchParams.has(k))
+      .map(k => `${k}=${url.searchParams.get(k)}`);
+
+    document.getElementById("commonIds").innerHTML = found.length
+      ? found.map(x => `<span class="pill">${x}</span>`).join(" ")
+      : `<span class="muted">Tidak ada field ID umum terdeteksi.</span>`;
+
+    document.getElementById("rawJson").textContent = JSON.stringify({
+      full_url: full,
+      path: url.pathname,
+      query: params
+    }, null, 2);
+  </script>
+</body>
+</html>
